@@ -70,3 +70,14 @@ button:hover {
 #errorMsg {
   color: red;
 }
+.day-btn span {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.today {
+  background: #b93f78;
+  transform: scale(1.06);
+  box-shadow: 0 8px 20px rgba(185, 63, 120, 0.35);
+  border: 3px solid #ffd6e5;
+}
