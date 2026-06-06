@@ -2,9 +2,7 @@ const correctUsername = "marwa";
 const correctPassword = "1234";
 
 window.onload = function () {
-  if (localStorage.getItem("loggedIn") === "true") {
-    showDaysPage();
-  }
+  localStorage.removeItem("loggedIn");
 };
 
 function login() {
@@ -12,7 +10,6 @@ function login() {
   let password = document.getElementById("password").value;
 
   if (username === correctUsername && password === correctPassword) {
-    localStorage.setItem("loggedIn", "true");
     showDaysPage();
   } else {
     document.getElementById("errorMsg").innerText = "Wrong username or password";
@@ -57,7 +54,8 @@ function createWeekDays() {
       (date.getMonth() + 1).toString().padStart(2, "0") + "/" +
       date.getFullYear();
 
-    btn.innerHTML = `${dayNames[i]}<br><span>${formattedDate}</span>`;
+    btn.innerHTML = `<div>${dayNames[i]}<span>${formattedDate}</span></div>`;
+
     btn.onclick = function () {
       openDay(dayNames[i]);
     };
@@ -67,8 +65,11 @@ function createWeekDays() {
 }
 
 function logout() {
-  localStorage.removeItem("loggedIn");
-  location.reload();
+  document.getElementById("daysPage").classList.add("hidden");
+  document.getElementById("loginPage").classList.remove("hidden");
+
+  document.getElementById("username").value = "";
+  document.getElementById("password").value = "";
 }
 
 function openDay(dayName) {

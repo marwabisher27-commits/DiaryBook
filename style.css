@@ -1,8 +1,37 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff6fa;
-  color: #4a2c35;
+  background:
+    radial-gradient(circle at 0% 0%, #ffd6e5 0%, transparent 22%),
+    radial-gradient(circle at 100% 100%, #ffd6e5 0%, transparent 24%),
+    linear-gradient(135deg, #fff7fb, #fffdfd);
+  color: #b83f72;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "🌸  ✨  🦋  ♡  ✨  🌿";
+  position: fixed;
+  left: 25px;
+  top: 120px;
+  font-size: 34px;
+  line-height: 95px;
+  opacity: 0.28;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+body::after {
+  content: "♡  ✨  🌸  🦋  ✨  🌿";
+  position: fixed;
+  right: 25px;
+  top: 110px;
+  font-size: 34px;
+  line-height: 95px;
+  opacity: 0.28;
+  writing-mode: vertical-rl;
+  pointer-events: none;
 }
 
 .page {
@@ -10,8 +39,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 20px;
+  padding: 35px 20px;
+  box-sizing: border-box;
 }
 
 .hidden {
@@ -23,61 +52,117 @@ body {
   height: 230px;
   object-fit: cover;
   border-radius: 50%;
-  border: 6px solid #f6c6d8;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border: 7px solid #f6c6d8;
+  box-shadow: 0 10px 28px rgba(184, 63, 114, 0.25);
+  background: #ffe4ee;
 }
 
 h1 {
-  color: #d36b93;
-  margin: 25px 0;
+  font-size: 46px;
+  color: #c43f76;
+  margin: 20px 0 25px;
+  text-align: center;
+  font-family: Georgia, serif;
 }
 
 input {
-  width: 260px;
-  padding: 14px;
-  margin: 8px;
-  border: 1px solid #f3b7cc;
-  border-radius: 14px;
-  font-size: 16px;
+  width: 320px;
+  padding: 16px 20px;
+  margin: 9px;
+  border: 1px solid #f0bfd0;
+  border-radius: 18px;
+  font-size: 18px;
   outline: none;
+  background: rgba(255,255,255,0.75);
 }
 
 button {
-  width: 290px;
-  padding: 14px;
-  margin: 10px;
-  border: none;
-  border-radius: 18px;
-  background: #e889aa;
-  color: white;
-  font-size: 18px;
   cursor: pointer;
-}
-
-button:hover {
-  background: #d36b93;
+  border: none;
 }
 
 .days {
+  width: 65%;
+  max-width: 850px;
   display: flex;
   flex-direction: column;
+  gap: 14px;
+}
+
+.day-btn {
+  width: 100%;
+  min-height: 86px;
+  border-radius: 18px;
+  background: rgba(255, 245, 248, 0.92);
+  color: #c43f76;
+  box-shadow: 0 6px 18px rgba(184, 63, 114, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 35px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.day-btn::before {
+  content: "📅";
+  background: #ffe0eb;
+  padding: 13px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.day-btn::after {
+  content: "›";
+  font-size: 55px;
+  color: #e0709c;
+}
+
+.day-btn span {
+  display: block;
+  font-size: 18px;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.today {
+  background: linear-gradient(135deg, #e95691, #c43f76);
+  color: white;
+  transform: scale(1.03);
+  box-shadow: 0 10px 30px rgba(196, 63, 118, 0.35);
+}
+
+.today::after {
+  color: white;
 }
 
 .logout {
-  background: #c9a3ad;
+  position: fixed;
+  top: 25px;
+  right: 35px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #d94b86;
+  color: white;
+  font-size: 0;
+  box-shadow: 0 8px 22px rgba(184, 63, 114, 0.3);
+}
+
+.logout::before {
+  content: "→";
+  font-size: 42px;
+}
+
+.logout::after {
+  content: "Logout";
+  position: absolute;
+  top: 78px;
+  right: -4px;
+  font-size: 16px;
+  color: #b83f72;
 }
 
 #errorMsg {
   color: red;
-}
-.day-btn span {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.today {
-  background: #b93f78;
-  transform: scale(1.06);
-  box-shadow: 0 8px 20px rgba(185, 63, 120, 0.35);
-  border: 3px solid #ffd6e5;
 }
