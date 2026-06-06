@@ -138,31 +138,72 @@ button {
 
 .logout {
   position: fixed;
-  top: 25px;
-  right: 35px;
-  width: 72px;
-  height: 72px;
+  top: 20px;
+  right: 25px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background: #d94b86;
   color: white;
   font-size: 0;
-  box-shadow: 0 8px 22px rgba(184, 63, 114, 0.3);
+  box-shadow: 0 5px 14px rgba(184, 63, 114, 0.25);
 }
 
 .logout::before {
   content: "→";
-  font-size: 42px;
+  font-size: 28px;
 }
 
 .logout::after {
   content: "Logout";
   position: absolute;
-  top: 78px;
-  right: -4px;
-  font-size: 16px;
+  top: 53px;
+  right: -3px;
+  font-size: 13px;
   color: #b83f72;
 }
 
 #errorMsg {
   color: red;
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 34px;
+    margin-top: 70px;
+  }
+
+  .days {
+    width: 95%;
+  }
+
+  .day-btn {
+    min-height: 78px;
+    padding: 0 18px;
+    font-size: 22px;
+  }
+
+  .day-btn span {
+    font-size: 15px;
+  }
+
+  .day-btn::before {
+    padding: 10px;
+    margin-right: 12px;
+  }
+
+  .logout {
+  width: 42px;
+  height: 42px;
+  top: 14px;
+  right: 14px;
+}
+
+.logout::before {
+  font-size: 25px;
+}
+
+.logout::after {
+  top: 47px;
+  font-size: 12px;
+}
 }
