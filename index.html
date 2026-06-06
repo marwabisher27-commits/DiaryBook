@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Diary Book</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="loginPage" class="page">
+  <img src="images/cover.jpg" class="cover-img">
+
+  <h1>Marwa's Diary Book 💗</h1>
+
+  <input type="text" id="username" placeholder="Username">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+  <p id="errorMsg"></p>
+</div>
+
+<div id="daysPage" class="page hidden">
+  <h1>My Week Planner 🌸</h1>
+
+  <div class="days">
+    <button onclick="openDay('Sunday')">Sunday</button>
+    <button onclick="openDay('Monday')">Monday</button>
+    <button onclick="openDay('Tuesday')">Tuesday</button>
+    <button onclick="openDay('Wednesday')">Wednesday</button>
+    <button onclick="openDay('Thursday')">Thursday</button>
+    <button onclick="openDay('Friday')">Friday</button>
+    <button onclick="openDay('Saturday')">Saturday</button>
+  </div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
