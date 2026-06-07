@@ -74,5 +74,5 @@ function logout() {
 
 function openDay(dayName) {
   localStorage.setItem("selectedDay", dayName);
-  alert("Next step: open planner for " + dayName);
+  window.location.href = "planner.html";
 }
