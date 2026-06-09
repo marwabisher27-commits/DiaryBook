@@ -29,11 +29,12 @@
 
 <script>
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("service-worker.js");
+    navigator.serviceWorker.register("./service-worker.js");
   }
 </script>
-<script type="module" src="firebase.js"></script>
-<script src="planner.js"></script>
+
+<script type="module" src="./firebase.js?v=1"></script>
+<script src="./planner.js?v=1"></script>
 
 </body>
 </html>
