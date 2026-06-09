@@ -96,24 +96,46 @@ if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark-mode");
 }
 function searchNotes() {
-  const word = document.getElementById("searchInput").value.toLowerCase();
-  const resultsBox = document.getElementById("searchResults");
-  resultsBox.innerHTML = "";
+    const keyword = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
-  if (word.trim() === "") return;
+    const resultsBox = document.getElementById("searchResults");
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
+    resultsBox.innerHTML = "";
 
-    if (key.includes("-note")) {
-      const note = localStorage.getItem(key);
+    if (!keyword) return;
 
-      if (note.toLowerCase().includes(word)) {
-        const item = document.createElement("div");
-        item.className = "search-result";
-        item.innerText = key.replace("-note", "") + " : " + note;
-        resultsBox.appendChild(item);
-      }
+    for (let i = 0; i < localStorage.length; i++) {
+
+        const key = localStorage.key(i);
+
+        if (key.endsWith("-tasks")) {
+
+            const tasks = JSON.parse(localStorage.getItem(key)) || [];
+
+            tasks.forEach(task => {
+
+                if (task.text.toLowerCase().includes(keyword)) {
+
+                    resultsBox.innerHTML += `
+                        <div class="search-result">
+                            <b>${key.replace("-tasks","")}</b><br>
+                            ${task.done ? "✅" : "⬜"} ${task.text}
+                        </div>
+                    `;
+                }
+            });
+        }
     }
-  }
+
+    if (resultsBox.innerHTML === "") {
+        resultsBox.innerHTML = `
+            <div class="search-result">
+                No results found 😔
+            </div>
+        `;
+    }
 }
