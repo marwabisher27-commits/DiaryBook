@@ -842,3 +842,43 @@ textarea {
   color: white;
   font-size: 28px;
 }
+.edit-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-box {
+  width: 90%;
+  max-width: 420px;
+  background: #fff6fa;
+  border-radius: 25px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(184, 63, 114, 0.3);
+}
+
+.edit-box h3 {
+  color: #c43f76;
+}
+
+.edit-box input {
+  width: 90%;
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid #f0bfd0;
+  font-size: 17px;
+}
+
+.edit-box button {
+  width: 120px;
+  padding: 12px;
+  margin: 10px 5px;
+  border-radius: 15px;
+  background: #d94b86;
+  color: white;
+}

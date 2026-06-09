@@ -255,17 +255,36 @@ if (localStorage.getItem("darkMode") === "true") {
 
 function editTask(key, index) {
   const tasks = getTasks(key);
-  const newText = prompt("Edit task:", tasks[index].text);
 
-  if (newText === null) return;
+  const popup = document.createElement("div");
+  popup.className = "edit-popup";
 
-  if (newText.trim() === "") {
+  popup.innerHTML = `
+    <div class="edit-box">
+      <h3>Edit Task ✏️</h3>
+      <input type="text" id="editInput" value="${tasks[index].text}">
+      <div>
+        <button onclick="saveEditedTask('${key}', ${index})">Save</button>
+        <button onclick="this.closest('.edit-popup').remove()">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(popup);
+}
+function saveEditedTask(key, index) {
+  const tasks = getTasks(key);
+  const input = document.getElementById("editInput");
+
+  if (input.value.trim() === "") {
     showMessage("Task cannot be empty");
     return;
   }
 
-  tasks[index].text = newText.trim();
+  tasks[index].text = input.value.trim();
   saveTasks(key, tasks);
+
+  document.querySelector(".edit-popup").remove();
   loadTasks(key);
 }
 
