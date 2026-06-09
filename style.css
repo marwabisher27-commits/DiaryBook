@@ -796,3 +796,49 @@ textarea {
     left: 18px;
   }
 }
+.edit-task-btn {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #d94b86;
+  color: white;
+  font-size: 16px;
+}
+
+.day-has-data {
+  border: 2px solid #e95691;
+  background: linear-gradient(135deg, #ffe4ef, #fff7fb);
+}
+
+.image-box img {
+  cursor: zoom-in;
+}
+
+.image-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-overlay img {
+  max-width: 90%;
+  max-height: 85%;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+.close-image {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #d94b86;
+  color: white;
+  font-size: 28px;
+}

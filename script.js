@@ -46,8 +46,21 @@ function createWeekDays() {
     date.setDate(startOfWeek.getDate() + i);
 
     const btn = document.createElement("button");
-    btn.className = "day-btn";
+    const dayKey = dayNames[i];
+let hasData = false;
 
+for (let j = 0; j < localStorage.length; j++) {
+  const storageKey = localStorage.key(j);
+  if (storageKey && storageKey.startsWith(dayKey + "-") &&
+      (storageKey.includes("-tasks") || storageKey.includes("-image") || storageKey.includes("-reminder"))) {
+    hasData = true;
+    break;
+  }
+}
+    btn.className = "day-btn";
+if (hasData) {
+  btn.classList.add("day-has-data");
+}
     if (i === currentDayIndex) {
       btn.classList.add("today");
     }
@@ -57,8 +70,7 @@ function createWeekDays() {
       (date.getMonth() + 1).toString().padStart(2, "0") + "/" +
       date.getFullYear();
 
-    btn.innerHTML = `<div>${dayNames[i]}<span>${formattedDate}</span></div>`;
-
+btn.innerHTML = `<div>${dayNames[i]} ${hasData ? "💗" : ""}<span>${formattedDate}</span></div>`;
     btn.onclick = function () {
       openDay(dayNames[i]);
     };

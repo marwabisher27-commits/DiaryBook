@@ -68,8 +68,7 @@ function openSlot(time) {
       <input type="file" accept="image/*" id="imageInput">
 
       <div id="imageBox" class="image-box">
-        ${savedImage ? `<img src="${savedImage}"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>` : ""}
-      </div>
+      ${savedImage ? `<img src="${savedImage}" onclick="openImageFull('${savedImage}')"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>` : ""}      </div>
 
       <div class="card-actions">
         <button class="save-btn" onclick="createPlanner()">Save</button>
@@ -117,7 +116,8 @@ function loadTasks(key) {
       <label class="task-item">
         <input type="checkbox" ${task.done ? "checked" : ""} onchange="toggleTask('${key}', ${index})">
         <span class="${task.done ? "done-task" : ""}">${task.text}</span>
-        <button class="small-delete" onclick="deleteTask('${key}', ${index})">×</button>
+        <button class="edit-task-btn" onclick="editTask('${key}', ${index})" type="button">✏</button>
+        <button class="small-delete" onclick="deleteTask('${key}', ${index})" type="button">×</button>
       </label>
     `;
   });
@@ -160,8 +160,8 @@ function saveImage(key, input) {
   reader.onload = function () {
     localStorage.setItem(key + "-image", reader.result);
     document.getElementById("imageBox").innerHTML =
-      `<img src="${reader.result}"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
-  };
+  `<img src="${reader.result}" onclick="openImageFull('${reader.result}')">
+   <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
 
   reader.readAsDataURL(file);
 }
@@ -253,3 +253,28 @@ if (localStorage.getItem("darkMode") === "true") {
 
 createPlanner();
 loadMood();
+function editTask(key, index) {
+  const tasks = getTasks(key);
+  const newText = prompt("Edit task:", tasks[index].text);
+
+  if (newText === null) return;
+
+  if (newText.trim() === "") {
+    showMessage("Task cannot be empty");
+    return;
+  }
+
+  tasks[index].text = newText.trim();
+  saveTasks(key, tasks);
+  loadTasks(key);
+}
+
+function openImageFull(src) {
+  const overlay = document.createElement("div");
+  overlay.className = "image-overlay";
+  overlay.innerHTML = `
+    <button class="close-image" onclick="this.parentElement.remove()">×</button>
+    <img src="${src}">
+  `;
+  document.body.appendChild(overlay);
+}
