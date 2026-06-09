@@ -278,6 +278,5 @@ function openImageFull(src) {
   `;
   document.body.appendChild(overlay);
 }
-
 createPlanner();
 loadMood();
