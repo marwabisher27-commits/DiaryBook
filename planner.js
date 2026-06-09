@@ -20,9 +20,10 @@ function createTimeRow(hour, minutes) {
   const savedReminder = localStorage.getItem(key + "-reminder") || "";
   const tasks = getTasks(key);
 
-  const tasksPreview = tasks.length > 0
-    ? tasks.map(t => `${t.done ? "✅" : "⬜"} ${t.text}`).join("<br>")
-    : "No note yet";
+  const tasksPreview =
+    tasks.length > 0
+      ? tasks.map(t => `${t.done ? "✅" : "⬜"} ${t.text}`).join("<br>")
+      : "No note yet";
 
   const row = document.createElement("div");
   row.className = "time-row";
@@ -33,13 +34,11 @@ function createTimeRow(hour, minutes) {
 
   row.innerHTML = `
     <div class="row-time">${time}</div>
-
     <div class="row-preview">
       ${tasksPreview}
       ${savedImage ? `<br><span class="img-label">📷 Image added</span>` : ""}
       ${savedReminder ? `<br><span class="reminder-label">🔔 Reminder on</span>` : ""}
     </div>
-
     <div class="row-arrow">›</div>
   `;
 
@@ -68,16 +67,19 @@ function openSlot(time) {
       <input type="file" accept="image/*" id="imageInput">
 
       <div id="imageBox" class="image-box">
-      ${savedImage ? `<img src="${savedImage}" onclick="openImageFull('${savedImage}')"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>` : ""}      </div>
+        ${savedImage ? `<img src="${savedImage}" onclick="openImageFull('${savedImage}')">
+        <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>` : ""}
+      </div>
 
       <div class="card-actions">
         <button class="save-btn" onclick="createPlanner()">Save</button>
         <button class="delete-slot-btn" onclick="deleteSlot('${key}')">Delete Note</button>
 
-        ${localStorage.getItem(key + "-reminder") === "true"
-          ? `<button class="reminder-on-btn">✅ Reminder On</button>
-             <button class="remove-reminder-btn" onclick="removeReminder('${key}', '${time}')">Remove Reminder</button>`
-          : `<button class="bell-btn" onclick="setReminder('${key}', '${time}')">🔔 Add Reminder</button>`
+        ${
+          localStorage.getItem(key + "-reminder") === "true"
+            ? `<button class="reminder-on-btn">✅ Reminder On</button>
+               <button class="remove-reminder-btn" onclick="removeReminder('${key}', '${time}')">Remove Reminder</button>`
+            : `<button class="bell-btn" onclick="setReminder('${key}', '${time}')">🔔 Add Reminder</button>`
         }
 
         <button class="back-list-btn" onclick="createPlanner()">Back to hours</button>
@@ -159,9 +161,10 @@ function saveImage(key, input) {
 
   reader.onload = function () {
     localStorage.setItem(key + "-image", reader.result);
-    document.getElementById("imageBox").innerHTML =
-      `<img src="${reader.result}" onclick="openImageFull('${reader.result}')">
-       <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
+    document.getElementById("imageBox").innerHTML = `
+      <img src="${reader.result}" onclick="openImageFull('${reader.result}')">
+      <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>
+    `;
   };
 
   reader.readAsDataURL(file);
@@ -195,10 +198,8 @@ async function setReminder(key, time) {
     }
 
     localStorage.setItem(key + "-reminder", "true");
-
     showMessage("Reminder saved 💗");
     openSlot(time);
-
   } catch (error) {
     console.log(error);
     localStorage.setItem(key + "-reminder", "true");
@@ -252,23 +253,13 @@ function exportDayPDF() {
 
 function toggleDarkMode() {
   document.body.classList.toggle("dark-mode");
-
-  if (document.body.classList.contains("dark-mode")) {
-    localStorage.setItem("darkMode", "true");
-  } else {
-    localStorage.setItem("darkMode", "false");
-  }
+  localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
 }
 
 function goBack() {
   localStorage.setItem("goToDays", "true");
   window.location.href = "index.html";
 }
-
-if (localStorage.getItem("darkMode") === "true") {
-  document.body.classList.add("dark-mode");
-}
-
 
 function editTask(key, index) {
   const tasks = getTasks(key);
@@ -289,6 +280,7 @@ function editTask(key, index) {
 
   document.body.appendChild(popup);
 }
+
 function saveEditedTask(key, index) {
   const tasks = getTasks(key);
   const input = document.getElementById("editInput");
@@ -314,5 +306,10 @@ function openImageFull(src) {
   `;
   document.body.appendChild(overlay);
 }
+
+if (localStorage.getItem("darkMode") === "true") {
+  document.body.classList.add("dark-mode");
+}
+
 createPlanner();
 loadMood();
