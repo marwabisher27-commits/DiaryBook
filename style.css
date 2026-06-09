@@ -689,3 +689,73 @@ textarea {
   margin: 8px;
   box-shadow: 0 4px 12px rgba(184, 63, 114, 0.14);
 }
+.delete-slot-btn {
+  margin-top: 10px;
+  padding: 10px 18px;
+  border-radius: 15px;
+  background: #7a4b5c;
+  color: white;
+  font-size: 16px;
+}
+.pdf-btn {
+  width: 180px;
+  padding: 12px;
+  border-radius: 18px;
+  background: #d94b86;
+  color: white;
+  font-size: 16px;
+  margin: 10px auto 20px;
+  display: block;
+}
+
+@media print {
+  .back-btn,
+  .dark-toggle,
+  .bell-btn,
+  .save-btn,
+  .back-list-btn,
+  .delete-slot-btn,
+  input,
+  button {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+}
+.task-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #fff0f6;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 14px;
+  color: #b83f72;
+  font-weight: bold;
+}
+
+.task-item input {
+  width: 20px;
+  height: 20px;
+}
+
+.done-task {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.add-task-box {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.add-task-box input {
+  flex: 1;
+}
+
+.add-task-box button {
+  width: 50px;
+}
