@@ -147,3 +147,16 @@ function removeReminder(key, time) {
   openSlot(time);
 }
 createPlanner();
+function saveMood(mood) {
+  localStorage.setItem(selectedDay + "-mood", mood);
+  document.getElementById("selectedMood").innerText = "Today mood: " + mood;
+}
+
+function loadMood() {
+  const mood = localStorage.getItem(selectedDay + "-mood");
+  if (mood) {
+    document.getElementById("selectedMood").innerText = "Today mood: " + mood;
+  }
+}
+
+loadMood();

@@ -579,3 +579,41 @@ textarea {
     font-size: 14px;
   }
 }
+.mood-box {
+  width: 75%;
+  max-width: 700px;
+  margin: 0 auto 20px;
+  padding: 15px;
+  border-radius: 22px;
+  background: rgba(255, 245, 248, 0.94);
+  box-shadow: 0 5px 14px rgba(184, 63, 114, 0.14);
+  text-align: center;
+}
+
+.mood-box p {
+  color: #c43f76;
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.mood-box button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffe0eb;
+  font-size: 24px;
+  margin: 5px;
+}
+
+#selectedMood {
+  text-align: center;
+  color: #c43f76;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .mood-box {
+    width: 92%;
+  }
+}

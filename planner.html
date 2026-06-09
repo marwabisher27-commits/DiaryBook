@@ -13,7 +13,16 @@
   <button class="back-btn" onclick="goBack()">←</button>
 
   <h1 id="dayTitle">Daily Planner 🌸</h1>
+<div class="mood-box">
+  <p>How do you feel today?</p>
+  <button onclick="saveMood('😍')">😍</button>
+  <button onclick="saveMood('😊')">😊</button>
+  <button onclick="saveMood('😐')">😐</button>
+  <button onclick="saveMood('😔')">😔</button>
+  <button onclick="saveMood('😴')">😴</button>
+</div>
 
+<p id="selectedMood"></p>
   <div id="plannerList"></div>
 </div>
 
