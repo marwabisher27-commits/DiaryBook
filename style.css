@@ -882,3 +882,14 @@ textarea {
   background: #d94b86;
   color: white;
 }
+.today {
+  background: #d94b86 !important;
+  color: white !important;
+  box-shadow: 0 6px 20px rgba(217,75,134,.35);
+}
+
+.today div,
+.today span {
+  color: white !important;
+  font-weight: 800;
+}
