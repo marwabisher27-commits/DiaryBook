@@ -20,27 +20,24 @@ exports.checkReminders = onSchedule("every 5 minutes", async () => {
     if (!r.token) continue;
 
     if (r.oneDayReminderTime && now >= r.oneDayReminderTime && r.beforeOneDaySent !== true) {
-      await admin.messaging().send({
-        token: r.token,
-        notification: {
-          title: "Diary Reminder 🔔",
-          body: `${r.day} at ${r.time} - reminder before 1 day`
-        }
-      });
+  await db.ref(`reminders/${id}/beforeOneDaySent`).set(true);
 
-      await db.ref(`reminders/${id}/beforeOneDaySent`).set(true);
+  await admin.messaging().send({
+    token: r.token,
+    notification: {
+      title: "Diary Reminder 🔔",
+      body: `${r.day} at ${r.time} - reminder before 1 day`
     }
+  });
+}
+if (r.oneHourReminderTime && now >= r.oneHourReminderTime && r.beforeOneHourSent !== true) {
+  await db.ref(`reminders/${id}/beforeOneHourSent`).set(true);
 
-    if (r.oneHourReminderTime && now >= r.oneHourReminderTime && r.beforeOneHourSent !== true) {
-      await admin.messaging().send({
-        token: r.token,
-        notification: {
-          title: "Diary Reminder 🔔",
-          body: `${r.day} at ${r.time} - reminder before 1 hour`
-        }
-      });
-
-      await db.ref(`reminders/${id}/beforeOneHourSent`).set(true);
+  await admin.messaging().send({
+    token: r.token,
+    notification: {
+      title: "Diary Reminder 🔔",
+      body: `${r.day} at ${r.time} - reminder before 1 hour`
     }
-  }
-});
+  });
+}
