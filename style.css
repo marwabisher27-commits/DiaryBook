@@ -617,3 +617,52 @@ textarea {
     width: 92%;
   }
 }
+.dark-toggle {
+  position: fixed;
+  top: 18px;
+  left: 75px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #8b5b6d;
+  color: white;
+  font-size: 20px;
+  z-index: 999;
+}
+
+.dark-mode {
+  background:
+    radial-gradient(circle at 0% 0%, #5b2d44 0%, transparent 22%),
+    radial-gradient(circle at 100% 100%, #5b2d44 0%, transparent 24%),
+    linear-gradient(135deg, #2b1b25, #3a2430);
+  color: #ffe0eb;
+}
+
+.dark-mode h1,
+.dark-mode .row-time,
+.dark-mode .calendar-head,
+.dark-mode #selectedMood {
+  color: #ffd6e7;
+}
+
+.dark-mode .day-btn,
+.dark-mode .time-row,
+.dark-mode .time-card,
+.dark-mode .mood-box,
+.dark-mode .calendar-day {
+  background: rgba(80, 45, 65, 0.95);
+  color: #ffe0eb;
+}
+
+.dark-mode .row-preview {
+  color: #ffd6e7;
+}
+
+@media (max-width: 768px) {
+  .dark-toggle {
+    width: 42px;
+    height: 42px;
+    left: 65px;
+    top: 14px;
+  }
+}
