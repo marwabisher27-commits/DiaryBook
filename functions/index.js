@@ -11,33 +11,36 @@ exports.checkReminders = onSchedule("every 5 minutes", async () => {
 
   if (!snap.exists()) return;
 
+  const reminders = snap.val();
   const now = Date.now();
 
-  for (const child of Object.entries(snap.val())) {
-    const id = child[0];
-    const r = child[1];
+  for (const id of Object.keys(reminders)) {
+    const r = reminders[id];
 
     if (!r.token) continue;
 
     if (r.oneDayReminderTime && now >= r.oneDayReminderTime && r.beforeOneDaySent !== true) {
-  await db.ref(`reminders/${id}/beforeOneDaySent`).set(true);
+      await db.ref(`reminders/${id}/beforeOneDaySent`).set(true);
 
-  await admin.messaging().send({
-    token: r.token,
-    notification: {
-      title: "Diary Reminder 🔔",
-      body: `${r.day} at ${r.time} - reminder before 1 day`
+      await admin.messaging().send({
+        token: r.token,
+        notification: {
+          title: "Diary Reminder 🔔",
+          body: `${r.day} at ${r.time} - reminder before 1 day`
+        }
+      });
     }
-  });
-}
-if (r.oneHourReminderTime && now >= r.oneHourReminderTime && r.beforeOneHourSent !== true) {
-  await db.ref(`reminders/${id}/beforeOneHourSent`).set(true);
 
-  await admin.messaging().send({
-    token: r.token,
-    notification: {
-      title: "Diary Reminder 🔔",
-      body: `${r.day} at ${r.time} - reminder before 1 hour`
+    if (r.oneHourReminderTime && now >= r.oneHourReminderTime && r.beforeOneHourSent !== true) {
+      await db.ref(`reminders/${id}/beforeOneHourSent`).set(true);
+
+      await admin.messaging().send({
+        token: r.token,
+        notification: {
+          title: "Diary Reminder 🔔",
+          body: `${r.day} at ${r.time} - reminder before 1 hour`
+        }
+      });
     }
-  });
-}
+  }
+});
