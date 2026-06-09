@@ -79,3 +79,6 @@ function openDay(dayName) {
   localStorage.setItem("selectedDay", dayName);
   window.location.href = "planner.html";
 }
+function openMonthCalendar() {
+  window.location.href = "month.html";
+}

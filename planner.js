@@ -107,22 +107,24 @@ function deleteImage(key) {
   document.getElementById("imageBox").innerHTML = "";
 }
 
-function setReminder(key, time) {
+async function setReminder(key, time) {
   if (!("Notification" in window)) {
-    showMessage("Notifications are not supported in this browser");
+    showMessage("Notifications are not supported");
     return;
   }
 
-  Notification.requestPermission().then(function (permission) {
-    if (permission !== "granted") {
-      showMessage("Please allow notifications first 🔔");
-      return;
-    }
+  const token = await window.requestFirebasePermission();
 
-    localStorage.setItem(key + "-reminder", "true");
-    showMessage("Reminder saved 💗<br>Before 1 hour & before 1 day<br>" + time);
-    openSlot(time);
-  });
+  if (!token) {
+    showMessage("Please allow notifications 🔔");
+    return;
+  }
+
+  localStorage.setItem(key + "-reminder", "true");
+
+  showMessage("Reminder saved 💗<br>Before 1 hour & before 1 day<br>" + time);
+
+  openSlot(time);
 }
 function showMessage(text) {
   const msg = document.createElement("div");

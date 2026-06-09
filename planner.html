@@ -17,11 +17,13 @@
   <div id="plannerList"></div>
 </div>
 
-<script src="planner.js"></script>
 <script>
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js");
   }
 </script>
+<script type="module" src="firebase.js"></script>
+<script src="planner.js"></script>
+
 </body>
 </html>
