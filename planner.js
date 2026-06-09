@@ -172,32 +172,39 @@ function deleteImage(key) {
   document.getElementById("imageBox").innerHTML = "";
 }
 
-aasync function setReminder(key, time) {
-  const token = await window.requestFirebasePermission();
+async function setReminder(key, time) {
+  try {
+    let token = "";
 
-  if (!token) {
-    showMessage("Please allow notifications 🔔");
-    return;
+    if (window.requestFirebasePermission) {
+      token = await window.requestFirebasePermission();
+    }
+
+    const reminderData = {
+      key: key,
+      day: selectedDay,
+      time: time,
+      token: token || "",
+      createdAt: new Date().toISOString(),
+      beforeOneHourSent: false,
+      beforeOneDaySent: false
+    };
+
+    if (window.saveReminderToFirebase) {
+      await window.saveReminderToFirebase(reminderData);
+    }
+
+    localStorage.setItem(key + "-reminder", "true");
+
+    showMessage("Reminder saved 💗");
+    openSlot(time);
+
+  } catch (error) {
+    console.log(error);
+    localStorage.setItem(key + "-reminder", "true");
+    showMessage("Reminder saved locally 💗");
+    openSlot(time);
   }
-
-  const now = new Date();
-
-  const reminderData = {
-    key: key,
-    day: selectedDay,
-    time: time,
-    token: token,
-    createdAt: now.toISOString(),
-    beforeOneHourSent: false,
-    beforeOneDaySent: false
-  };
-
-  await window.saveReminderToFirebase(reminderData);
-
-  localStorage.setItem(key + "-reminder", "true");
-
-  showMessage("Reminder saved on server 💗<br>Before 1 hour & before 1 day<br>" + time);
-  openSlot(time);
 }
 
 function removeReminder(key, time) {
