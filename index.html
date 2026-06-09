@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <title>Diary Book</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d94b86">
 </head>
 <body>
 
@@ -36,5 +38,10 @@
 </div>
 
 <script src="script.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("service-worker.js");
+  }
+</script>
 </body>
 </html>
