@@ -160,8 +160,9 @@ function saveImage(key, input) {
   reader.onload = function () {
     localStorage.setItem(key + "-image", reader.result);
     document.getElementById("imageBox").innerHTML =
-  `<img src="${reader.result}" onclick="openImageFull('${reader.result}')">
-   <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
+      `<img src="${reader.result}" onclick="openImageFull('${reader.result}')">
+       <button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
+  };
 
   reader.readAsDataURL(file);
 }
@@ -277,6 +278,6 @@ function openImageFull(src) {
   `;
   document.body.appendChild(overlay);
 }
-}
+
 createPlanner();
 loadMood();
