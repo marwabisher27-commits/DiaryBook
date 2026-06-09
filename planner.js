@@ -251,8 +251,7 @@ if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark-mode");
 }
 
-createPlanner();
-loadMood();
+
 function editTask(key, index) {
   const tasks = getTasks(key);
   const newText = prompt("Edit task:", tasks[index].text);
@@ -278,3 +277,6 @@ function openImageFull(src) {
   `;
   document.body.appendChild(overlay);
 }
+}
+createPlanner();
+loadMood();
