@@ -1,9 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0mfdioS8eWFcMJs3QrA9EtVfDS2YS6yw",
   authDomain: "diarybook-66e64.firebaseapp.com",
+  databaseURL: "https://diarybook-66e64-default-rtdb.firebaseio.com",
   projectId: "diarybook-66e64",
   storageBucket: "diarybook-66e64.firebasestorage.app",
   messagingSenderId: "795103658821",
@@ -12,6 +14,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
+const database = getDatabase(app);
 
 export async function requestFirebasePermission() {
   const permission = await Notification.requestPermission();
@@ -25,8 +28,15 @@ export async function requestFirebasePermission() {
   });
 
   localStorage.setItem("firebaseToken", token);
-  console.log("Firebase token:", token);
-
   return token;
 }
+
+export async function saveReminderToFirebase(reminderData) {
+  const remindersRef = ref(database, "reminders");
+  const newReminderRef = push(remindersRef);
+
+  await set(newReminderRef, reminderData);
+}
+
 window.requestFirebasePermission = requestFirebasePermission;
+window.saveReminderToFirebase = saveReminderToFirebase;

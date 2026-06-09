@@ -172,12 +172,7 @@ function deleteImage(key) {
   document.getElementById("imageBox").innerHTML = "";
 }
 
-async function setReminder(key, time) {
-  if (!("Notification" in window)) {
-    showMessage("Notifications are not supported");
-    return;
-  }
-
+aasync function setReminder(key, time) {
   const token = await window.requestFirebasePermission();
 
   if (!token) {
@@ -185,8 +180,23 @@ async function setReminder(key, time) {
     return;
   }
 
+  const now = new Date();
+
+  const reminderData = {
+    key: key,
+    day: selectedDay,
+    time: time,
+    token: token,
+    createdAt: now.toISOString(),
+    beforeOneHourSent: false,
+    beforeOneDaySent: false
+  };
+
+  await window.saveReminderToFirebase(reminderData);
+
   localStorage.setItem(key + "-reminder", "true");
-  showMessage("Reminder saved 💗<br>Before 1 hour & before 1 day<br>" + time);
+
+  showMessage("Reminder saved on server 💗<br>Before 1 hour & before 1 day<br>" + time);
   openSlot(time);
 }
 
