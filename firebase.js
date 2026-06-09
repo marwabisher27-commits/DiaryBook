@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, push, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0mfdioS8eWFcMJs3QrA9EtVfDS2YS6yw",
@@ -16,27 +16,32 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 const database = getDatabase(app);
 
-export async function requestFirebasePermission() {
+window.requestFirebasePermission = async function () {
   const permission = await Notification.requestPermission();
-  console.log("Permission:", permission);
-  if (permission !== "granted") {
-    return null;
-  }
+  if (permission !== "granted") return null;
 
   const token = await getToken(messaging, {
     vapidKey: "BGO19k2WnSwoIXMu1US-uk5_egIB0P8j8INe5OzDL0uOq_dnLpCQh_sd75zSOJ1PwUNv15zKmJGlYIaASFUDkBE"
   });
 
-  localStorage.setItem("firebaseToken", token);
   return token;
-}
-console.log("Token:", token);
-export async function saveReminderToFirebase(reminderData) {
+};
+
+window.saveReminderToFirebase = async function (reminderData) {
   const remindersRef = ref(database, "reminders");
   const newReminderRef = push(remindersRef);
-
   await set(newReminderRef, reminderData);
-}
+};
 
-window.requestFirebasePermission = requestFirebasePermission;
-window.saveReminderToFirebase = saveReminderToFirebase;
+window.saveTasksToFirebase = async function (key, tasks) {
+  await set(ref(database, "tasks/" + key), tasks);
+};
+
+window.getTasksFromFirebase = async function (key) {
+  const snapshot = await get(ref(database, "tasks/" + key));
+  return snapshot.exists() ? snapshot.val() : [];
+};
+
+window.deleteTasksFromFirebase = async function (key) {
+  await remove(ref(database, "tasks/" + key));
+};

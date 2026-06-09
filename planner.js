@@ -125,7 +125,7 @@ function loadTasks(key) {
   });
 }
 
-function addTask(key) {
+async function addTask(key) {
   const input = document.getElementById("taskInput");
   const text = input.value.trim();
 
@@ -135,21 +135,37 @@ function addTask(key) {
   tasks.push({ text: text, done: false });
 
   saveTasks(key, tasks);
+
+  if (window.saveTasksToFirebase) {
+    await window.saveTasksToFirebase(key, tasks);
+  }
+
   input.value = "";
   loadTasks(key);
 }
 
-function toggleTask(key, index) {
+async function toggleTask(key, index) {
   const tasks = getTasks(key);
   tasks[index].done = !tasks[index].done;
+
   saveTasks(key, tasks);
+
+  if (window.saveTasksToFirebase) {
+    await window.saveTasksToFirebase(key, tasks);
+  }
+
   loadTasks(key);
 }
-
-function deleteTask(key, index) {
+async function deleteTask(key, index) {
   const tasks = getTasks(key);
   tasks.splice(index, 1);
+
   saveTasks(key, tasks);
+
+  if (window.saveTasksToFirebase) {
+    await window.saveTasksToFirebase(key, tasks);
+  }
+
   loadTasks(key);
 }
 
@@ -225,10 +241,14 @@ function removeReminder(key, time) {
   openSlot(time);
 }
 
-function deleteSlot(key) {
+async function deleteSlot(key) {
   localStorage.removeItem(key + "-tasks");
   localStorage.removeItem(key + "-image");
   localStorage.removeItem(key + "-reminder");
+
+  if (window.deleteTasksFromFirebase) {
+    await window.deleteTasksFromFirebase(key);
+  }
 
   showMessage("Deleted successfully 🗑️");
   createPlanner();
