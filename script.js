@@ -2,7 +2,10 @@ const correctUsername = "marwa";
 const correctPassword = "1234";
 
 window.onload = function () {
-  localStorage.removeItem("loggedIn");
+  if (localStorage.getItem("goToDays") === "true") {
+    localStorage.removeItem("goToDays");
+    showDaysPage();
+  }
 };
 
 function login() {

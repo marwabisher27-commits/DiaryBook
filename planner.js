@@ -7,46 +7,72 @@ function createPlanner() {
   plannerList.innerHTML = "";
 
   for (let hour = 0; hour < 24; hour++) {
-    createSlot(hour, "00");
-    createSlot(hour, "30");
+    createTimeRow(hour, "00");
+    createTimeRow(hour, "30");
   }
 }
 
-function createSlot(hour, minutes) {
-  const time =
-    hour.toString().padStart(2, "0") + ":" + minutes;
-
+function createTimeRow(hour, minutes) {
+  const time = hour.toString().padStart(2, "0") + ":" + minutes;
   const key = selectedDay + "-" + time;
 
-  const card = document.createElement("div");
-  card.className = "time-card";
+  const savedNote = localStorage.getItem(key + "-note") || "";
+  const preview = savedNote ? savedNote.substring(0, 35) : "No note yet";
 
-  card.innerHTML = `
-    <div class="time">${time}</div>
+  const row = document.createElement("div");
+  row.className = "time-row";
 
-    <textarea 
-      placeholder="Write your note..."
-      oninput="saveNote('${key}', this.value)"
-    >${localStorage.getItem(key + "-note") || ""}</textarea>
+  if (savedNote) {
+    row.classList.add("has-note");
+  }
 
-    <input type="file" accept="image/*" onchange="saveImage('${key}', this)">
-
-    <div id="${key}-image-box" class="image-box"></div>
-
-    <button class="bell-btn" onclick="setReminder('${time}')">🔔 Reminder</button>
+  row.innerHTML = `
+    <div class="row-time">${time}</div>
+    <div class="row-preview">${preview}</div>
+    <div class="row-arrow">›</div>
   `;
 
-  plannerList.appendChild(card);
+  row.onclick = function () {
+    openSlot(time);
+  };
 
-  const savedImage = localStorage.getItem(key + "-image");
-  if (savedImage) {
-    document.getElementById(key + "-image-box").innerHTML =
-      `<img src="${savedImage}">`;
-  }
+  plannerList.appendChild(row);
 }
 
-function saveNote(key, value) {
-  localStorage.setItem(key + "-note", value);
+function openSlot(time) {
+  const key = selectedDay + "-" + time;
+  const savedNote = localStorage.getItem(key + "-note") || "";
+  const savedImage = localStorage.getItem(key + "-image") || "";
+
+  plannerList.innerHTML = `
+    <div class="time-card big-card">
+      <h2>${time}</h2>
+
+      <textarea id="noteInput" placeholder="Write your note...">${savedNote}</textarea>
+
+      <input type="file" accept="image/*" id="imageInput">
+
+      <div id="imageBox" class="image-box">
+        ${savedImage ? `<img src="${savedImage}">` : ""}
+      </div>
+
+      <button class="save-btn" onclick="saveSlot('${key}', '${time}')">Save</button>
+      <button class="bell-btn" onclick="setReminder('${time}')">🔔 Reminder</button>
+      <button class="back-list-btn" onclick="createPlanner()">Back to hours</button>
+    </div>
+  `;
+
+  document.getElementById("imageInput").onchange = function () {
+    saveImage(key, this);
+  };
+}
+
+function saveSlot(key, time) {
+  const note = document.getElementById("noteInput").value;
+  localStorage.setItem(key + "-note", note);
+
+  alert("Saved " + time);
+  createPlanner();
 }
 
 function saveImage(key, input) {
@@ -57,8 +83,7 @@ function saveImage(key, input) {
 
   reader.onload = function () {
     localStorage.setItem(key + "-image", reader.result);
-    document.getElementById(key + "-image-box").innerHTML =
-      `<img src="${reader.result}">`;
+    document.getElementById("imageBox").innerHTML = `<img src="${reader.result}">`;
   };
 
   reader.readAsDataURL(file);
@@ -69,6 +94,7 @@ function setReminder(time) {
 }
 
 function goBack() {
+  localStorage.setItem("goToDays", "true");
   window.location.href = "index.html";
 }
 
