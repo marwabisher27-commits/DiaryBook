@@ -139,3 +139,42 @@ function searchNotes() {
         `;
     }
 }
+window.searchNotes = function () {
+  const input = document.getElementById("searchInput");
+  const resultsBox = document.getElementById("searchResults");
+
+  const keyword = input.value.toLowerCase().trim();
+  resultsBox.innerHTML = "";
+
+  if (keyword === "") {
+    resultsBox.innerHTML = `<div class="search-result">Write something to search 💗</div>`;
+    return;
+  }
+
+  let found = false;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+
+    if (key.endsWith("-tasks")) {
+      const tasks = JSON.parse(localStorage.getItem(key)) || [];
+
+      tasks.forEach(function (task) {
+        if (task.text.toLowerCase().includes(keyword)) {
+          found = true;
+
+          resultsBox.innerHTML += `
+            <div class="search-result">
+              <b>${key.replace("-tasks", "")}</b><br>
+              ${task.done ? "✅" : "⬜"} ${task.text}
+            </div>
+          `;
+        }
+      });
+    }
+  }
+
+  if (!found) {
+    resultsBox.innerHTML = `<div class="search-result">No results found 😔</div>`;
+  }
+};
