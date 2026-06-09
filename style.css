@@ -666,3 +666,26 @@ textarea {
     top: 14px;
   }
 }
+.search-box {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.search-box input {
+  width: 230px;
+}
+
+.search-box button {
+  width: 55px;
+  border-radius: 15px;
+}
+
+.search-result {
+  background: #fff0f6;
+  color: #b83f72;
+  padding: 12px;
+  border-radius: 14px;
+  margin: 8px;
+  box-shadow: 0 4px 12px rgba(184, 63, 114, 0.14);
+}

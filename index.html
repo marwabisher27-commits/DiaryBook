@@ -23,6 +23,12 @@
 
 <div id="daysPage" class="page hidden">
   <h1>My Week Planner 🌸</h1>
+  <div class="search-box">
+  <input type="text" id="searchInput" placeholder="Search notes...">
+  <button onclick="searchNotes()">🔍</button>
+</div>
+
+<div id="searchResults"></div>
 <button class="month-btn" onclick="openMonthCalendar()">📅 Month Calendar</button>
   <div class="days">
     <button onclick="openDay('Sunday')">Sunday</button>

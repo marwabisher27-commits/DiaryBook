@@ -95,3 +95,25 @@ function toggleDarkMode() {
 if (localStorage.getItem("darkMode") === "true") {
   document.body.classList.add("dark-mode");
 }
+function searchNotes() {
+  const word = document.getElementById("searchInput").value.toLowerCase();
+  const resultsBox = document.getElementById("searchResults");
+  resultsBox.innerHTML = "";
+
+  if (word.trim() === "") return;
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+
+    if (key.includes("-note")) {
+      const note = localStorage.getItem(key);
+
+      if (note.toLowerCase().includes(word)) {
+        const item = document.createElement("div");
+        item.className = "search-result";
+        item.innerText = key.replace("-note", "") + " : " + note;
+        resultsBox.appendChild(item);
+      }
+    }
+  }
+}
