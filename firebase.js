@@ -18,7 +18,7 @@ const database = getDatabase(app);
 
 export async function requestFirebasePermission() {
   const permission = await Notification.requestPermission();
-
+  console.log("Permission:", permission);
   if (permission !== "granted") {
     return null;
   }
@@ -30,7 +30,7 @@ export async function requestFirebasePermission() {
   localStorage.setItem("firebaseToken", token);
   return token;
 }
-
+console.log("Token:", token);
 export async function saveReminderToFirebase(reminderData) {
   const remindersRef = ref(database, "reminders");
   const newReminderRef = push(remindersRef);

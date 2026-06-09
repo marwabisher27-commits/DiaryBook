@@ -183,11 +183,21 @@ async function setReminder(key, time) {
       token = await window.requestFirebasePermission();
     }
 
+    const [hours, minutes] = time.split(":").map(Number);
+    const targetDate = new Date();
+    targetDate.setHours(hours, minutes, 0, 0);
+
+    const oneHourReminderTime = targetDate.getTime() - 60 * 60 * 1000;
+    const oneDayReminderTime = targetDate.getTime() - 24 * 60 * 60 * 1000;
+
     const reminderData = {
-      key: key,
+      key,
       day: selectedDay,
-      time: time,
+      time,
       token: token || "",
+      targetTime: targetDate.getTime(),
+      oneHourReminderTime,
+      oneDayReminderTime,
       createdAt: new Date().toISOString(),
       beforeOneHourSent: false,
       beforeOneDaySent: false
@@ -198,8 +208,9 @@ async function setReminder(key, time) {
     }
 
     localStorage.setItem(key + "-reminder", "true");
-    showMessage("Reminder saved 💗");
+    showMessage("Reminder saved on server 💗");
     openSlot(time);
+
   } catch (error) {
     console.log(error);
     localStorage.setItem(key + "-reminder", "true");
