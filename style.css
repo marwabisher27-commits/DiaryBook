@@ -759,3 +759,40 @@ textarea {
 .add-task-box button {
   width: 50px;
 }
+@media (max-width: 768px) {
+  #loginPage {
+    justify-content: flex-start;
+    padding-top: 85px;
+  }
+
+  #loginPage .cover-img {
+    width: 190px;
+    height: 190px;
+  }
+
+  #loginPage h1 {
+    font-size: 36px;
+    line-height: 1.2;
+    margin: 25px 0;
+  }
+
+  #loginPage input {
+    width: 82%;
+    max-width: 360px;
+    padding: 18px;
+    font-size: 18px;
+  }
+
+  #loginPage button {
+    width: 82%;
+    max-width: 360px;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 18px;
+  }
+
+  .dark-toggle {
+    top: 18px;
+    left: 18px;
+  }
+}
