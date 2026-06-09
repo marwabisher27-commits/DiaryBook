@@ -137,6 +137,7 @@ async function addTask(key) {
   saveTasks(key, tasks);
 
   if (window.saveTasksToFirebase) {
+    console.log("Calling Firebase save...");
     await window.saveTasksToFirebase(key, tasks);
   }
 

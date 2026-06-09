@@ -34,6 +34,7 @@ window.saveReminderToFirebase = async function (reminderData) {
 };
 
 window.saveTasksToFirebase = async function (key, tasks) {
+  console.log("Saving task:", key);
   await set(ref(database, "tasks/" + key), tasks);
 };
 
