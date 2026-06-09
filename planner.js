@@ -17,18 +17,18 @@ function createTimeRow(hour, minutes) {
   const key = selectedDay + "-" + time;
 
   const savedNote = localStorage.getItem(key + "-note") || "";
-  const preview = savedNote ? savedNote.substring(0, 35) : "No note yet";
-
+  const savedImage = localStorage.getItem(key + "-image") || "";
+const savedReminder = localStorage.getItem(key + "-reminder") || "";
   const row = document.createElement("div");
   row.className = "time-row";
 
-  if (savedNote) {
-    row.classList.add("has-note");
-  }
-
+  if (savedNote.trim() !== "" || savedImage) row.classList.add("has-note");
   row.innerHTML = `
     <div class="row-time">${time}</div>
-    <div class="row-preview">${preview}</div>
+    <div class="row-preview">
+      ${savedNote.trim() !== "" ? savedNote : "No note yet"}
+      ${savedImage ? `<br><span class="img-label">📷 Image added</span>` : ""}
+      ${savedReminder ? `<br><span class="reminder-label">🔔 Reminder on</span>` : ""}    </div>
     <div class="row-arrow">›</div>
   `;
 
@@ -53,12 +53,20 @@ function openSlot(time) {
       <input type="file" accept="image/*" id="imageInput">
 
       <div id="imageBox" class="image-box">
-        ${savedImage ? `<img src="${savedImage}">` : ""}
+        ${savedImage ? `<img src="${savedImage}"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>` : ""}
       </div>
 
-      <button class="save-btn" onclick="saveSlot('${key}', '${time}')">Save</button>
-      <button class="bell-btn" onclick="setReminder('${time}')">🔔 Reminder</button>
-      <button class="back-list-btn" onclick="createPlanner()">Back to hours</button>
+      <div class="card-actions">
+        <button class="save-btn" onclick="saveSlot('${key}', '${time}')">Save</button>
+
+${localStorage.getItem(key + "-reminder") === "true"
+  ? `<button class="reminder-on-btn">✅ Reminder On</button>
+     <button class="remove-reminder-btn" onclick="removeReminder('${key}', '${time}')">Remove Reminder</button>`
+  : `<button class="bell-btn" onclick="setReminder('${key}', '${time}')">🔔 Add Reminder</button>`
+}
+
+<button class="back-list-btn" onclick="createPlanner()">Back to hours</button>
+      </div>
     </div>
   `;
 
@@ -68,10 +76,14 @@ function openSlot(time) {
 }
 
 function saveSlot(key, time) {
-  const note = document.getElementById("noteInput").value;
-  localStorage.setItem(key + "-note", note);
+  const note = document.getElementById("noteInput").value.trim();
 
-  alert("Saved " + time);
+  if (note === "") {
+    localStorage.removeItem(key + "-note");
+  } else {
+    localStorage.setItem(key + "-note", note);
+  }
+
   createPlanner();
 }
 
@@ -83,19 +95,53 @@ function saveImage(key, input) {
 
   reader.onload = function () {
     localStorage.setItem(key + "-image", reader.result);
-    document.getElementById("imageBox").innerHTML = `<img src="${reader.result}">`;
+    document.getElementById("imageBox").innerHTML =
+      `<img src="${reader.result}"><button class="delete-img-btn" onclick="deleteImage('${key}')">Delete Image</button>`;
   };
 
   reader.readAsDataURL(file);
 }
 
-function setReminder(time) {
-  alert("Reminder saved for " + selectedDay + " at " + time);
+function deleteImage(key) {
+  localStorage.removeItem(key + "-image");
+  document.getElementById("imageBox").innerHTML = "";
 }
 
+function setReminder(key, time) {
+  if (!("Notification" in window)) {
+    showMessage("Notifications are not supported in this browser");
+    return;
+  }
+
+  Notification.requestPermission().then(function (permission) {
+    if (permission !== "granted") {
+      showMessage("Please allow notifications first 🔔");
+      return;
+    }
+
+    localStorage.setItem(key + "-reminder", "true");
+    showMessage("Reminder saved 💗<br>Before 1 hour & before 1 day<br>" + time);
+    openSlot(time);
+  });
+}
+function showMessage(text) {
+  const msg = document.createElement("div");
+  msg.className = "pretty-message";
+  msg.innerHTML = text;
+
+  document.body.appendChild(msg);
+
+  setTimeout(() => {
+    msg.remove();
+  }, 3000);
+}
 function goBack() {
   localStorage.setItem("goToDays", "true");
   window.location.href = "index.html";
 }
-
+function removeReminder(key, time) {
+  localStorage.removeItem(key + "-reminder");
+  showMessage("Reminder removed");
+  openSlot(time);
+}
 createPlanner();
