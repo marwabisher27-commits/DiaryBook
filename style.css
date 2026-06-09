@@ -434,3 +434,86 @@ textarea {
 .remove-reminder-btn {
   background: #8b5b6d;
 }
+@media (max-width: 768px) {
+  .page {
+    padding-top: 55px;
+  }
+
+  .cover-img {
+    width: 150px;
+    height: 150px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  input {
+    width: 78%;
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  #loginPage button {
+    width: 160px;
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .days {
+    width: 92%;
+    gap: 12px;
+  }
+
+  .day-btn {
+    min-height: 72px;
+    font-size: 21px;
+    padding: 0 16px;
+  }
+
+  .day-btn span {
+    font-size: 15px;
+  }
+
+  #plannerList {
+    width: 92%;
+  }
+
+  .time-row {
+    min-height: 70px;
+    padding: 16px;
+    grid-template-columns: 75px 1fr 22px;
+  }
+
+  .row-time {
+    font-size: 22px;
+  }
+
+  .row-preview {
+    font-size: 15px;
+  }
+
+  .big-card {
+    width: 92%;
+    margin: 40px auto;
+    padding: 22px;
+  }
+
+  .big-card h2 {
+    font-size: 34px;
+  }
+
+  textarea {
+    min-height: 95px;
+    font-size: 16px;
+  }
+
+  .save-btn,
+  .bell-btn,
+  .back-list-btn,
+  .remove-reminder-btn,
+  .reminder-on-btn {
+    font-size: 14px;
+    padding: 11px 14px;
+  }
+}
